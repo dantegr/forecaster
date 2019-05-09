@@ -1,15 +1,24 @@
-const request = require('request');
-
 const geocode = require('./utils/geocode');
 const darksky = require('./utils/darksky');
 
+const address = process.argv[2];
+if(!address){
+  console.log('please provide an address!');
+} else {
+  geocode( address, (error,data) => {
+    if(error) {
+      return console.log(error);
+    }
+    darksky(data.latitude, data.longtitude, (error,darkskyData) => {
+      if(error) {
+        return console.log(error);
+      }
+  
+      console.log(data.location);
+      console.log(darkskyData);
+    });
+  });
+  
+}
 
-geocode( 'Stockholm', (error,data) => {
-  console.log('Error',error);
-  console.log('Data',data);
-});
 
-darksky(40.63333, 22.95, (error,data) => {
-  console.log('Error:', error);
-  console.log('Data:',data);
-});
