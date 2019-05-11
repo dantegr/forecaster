@@ -5,16 +5,16 @@ const address = process.argv[2];
 if(!address){
   console.log('please provide an address!');
 } else {
-  geocode( address, (error,data) => {
+  geocode( address, (error,{ latitude, longtitude, location }) => {
     if(error) {
       return console.log(error);
     }
-    darksky(data.latitude, data.longtitude, (error,darkskyData) => {
+    darksky(latitude, longtitude, (error,darkskyData) => {
       if(error) {
         return console.log(error);
       }
   
-      console.log(data.location);
+      console.log(location);
       console.log(darkskyData);
     });
   });
