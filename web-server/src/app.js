@@ -43,6 +43,20 @@ app.get('/weather',(req, res) => {
   res.send({forecast:'this the weather forecast', location:'Thessaloniki'});
 });
 
+app.get('/help/*',(req,res) => {
+  res.render('404', {
+    title: '404 Page',
+    error:'Help article not found'
+  });
+});
+
+app.get('*',(req,res) => {
+  res.render('404', {
+    title: '404 Page',
+    error:'Page not found'
+  });
+});
+
 app.listen(3000, () => {
   console.log('Server is up on port 3000');
 });
