@@ -46,14 +46,16 @@ app.get('/weather',(req, res) => {
 app.get('/help/*',(req,res) => {
   res.render('404', {
     title: '404 Page',
-    error:'Help article not found'
+    error:'Help article not found',
+    name: 'Pantelis Tamtakos'
   });
 });
 
 app.get('*',(req,res) => {
   res.render('404', {
     title: '404 Page',
-    error:'Page not found'
+    error:'Page not found',
+    name: 'Pantelis Tamtakos'
   });
 });
 
