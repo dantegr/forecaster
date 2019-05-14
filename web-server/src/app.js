@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const geocode = require('./utils/geocode');
+const darksky = require('./utils/darksky');
+
 const app = express();
 
 //Define Paths for express
@@ -45,11 +48,24 @@ app.get('/weather',(req, res) => {
       error:'Address must be provided'
     });
   }
-  console.log(req.query.search);
-  res.send({
-    forecast:'this the weather forecast',
-    location:'Thessaloniki',
-    address: req.query.address
+    geocode( req.query.address, (error,{ latitude, longtitude, location }) => {
+      if(error) {
+        return res.send({
+          error:'Invalid location'
+        });
+      }
+      darksky(latitude, longtitude, (error,darkskyData) => {
+        if(error) {
+          return res.send({
+            error:'Invalid weather data'
+          });
+        }
+        res.send({
+          forecast:darkskyData,
+          location:location,
+          address: req.query.address
+        });
+      });
     });
 });
 
