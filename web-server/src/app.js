@@ -48,7 +48,7 @@ app.get('/weather',(req, res) => {
       error:'Address must be provided'
     });
   }
-    geocode( req.query.address, (error,{ latitude, longtitude, location }) => {
+    geocode( req.query.address, (error,{ latitude, longtitude, location } = {}) => {
       if(error) {
         return res.send({
           error:'Invalid location'
@@ -62,7 +62,7 @@ app.get('/weather',(req, res) => {
         }
         res.send({
           forecast:darkskyData,
-          location:location,
+          location,
           address: req.query.address
         });
       });
